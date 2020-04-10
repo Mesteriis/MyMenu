@@ -16,16 +16,38 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    gui/guiitem.cpp \
+    gui/guisettings.cpp \
     main.cpp \
-    guicore.cpp
+    gui/guicore.cpp \
+    sys/filesettingscombain.cpp \
+    sys/itemmenu.cpp \
+    sys/settings.cpp \
+    sys/swcore.cpp
 
 HEADERS += \
-    guicore.h
+    gui/guicore.h \
+    gui/guiitem.h \
+    gui/guisettings.h \
+    sys/filesettingscombain.h \
+    sys/itemmenu.h \
+    sys/settings.h \
+    sys/swcore.h
 
 FORMS += \
-    guicore.ui
+    gui/guicore.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    res/res.qrc
+
+macx: QMAKE_LFLAGS += -framework Cocoa
+QMAKE_INFO_PLIST= $${PWD}/res/info.plist
+
+
+QMAKE_CFLAGS += -gdwarf-2
+QMAKE_CXXFLAGS += -gdwarf-2
