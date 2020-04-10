@@ -6,6 +6,5 @@
     </qresource>
     <qresource prefix="/sys" lang="plist">
         <file>info.plist</file>
-        <file>defSettings.xml</file>
     </qresource>
 </RCC>

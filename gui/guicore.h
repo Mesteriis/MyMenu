@@ -11,6 +11,10 @@
 #include <QStyle>
 #include <QDebug>
 #include <QDialog>
+#include <QHBoxLayout>
+#include <QDesktopServices>
+#include <QLabel>
+
 
 #include "guiitem.h"
 
@@ -30,6 +34,8 @@ public:
 
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
     void closeEvent(QCloseEvent * event);
+
+    void myClicked();
 
 private:
     Ui::guicore *ui;

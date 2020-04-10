@@ -6,30 +6,35 @@ guicore::guicore(QWidget *parent)
     , ui(new Ui::guicore)
 {
     ui->setupUi(this);
+    swcore *swc = new swcore(this);
     tray = new QSystemTrayIcon(this);
     tray->setIcon(this->style()->standardIcon(QStyle::SP_DirIcon));
     tray->setToolTip("MyMenu");
     menu = new QMenu(this);
-    QAction * viewWindow = new QAction("Развернуть окно", this);
-    QAction * quitAction = new QAction("Выход", this);
-
-    connect(viewWindow, &QAction::triggered, this, &guicore::show);
+    QAction *viewWindowSettings = new QAction("Settings", this);
+    QAction *quitAction = new QAction("Exit", this);
+    connect(viewWindowSettings, &QAction::triggered, this, &guicore::show);
     connect(quitAction, &QAction::triggered, this, &guicore::close);
     QIcon ico(":/pic/icons_25.png");
-    menu->addMenu(ico,"test");
-    menu->addSection("tset");
-    menu->setAsDockMenu();
-    menu->addAction(viewWindow);
+    menu->addAction(viewWindowSettings);
     menu->addAction(quitAction);
-
-    tray->setContextMenu(menu);
-
-
-    tray->show();
-
+    menu->addSeparator();
 
     connect(tray, &QSystemTrayIcon::activated, this, &guicore::iconActivated);
-//    swcore *swc = new swcore;
+    QList <QAction*> arr;
+
+    auto x = swc->readDir("/Users/avm/Downloads/torrents");
+
+    for (auto i : x) {
+        QAction *act = new QAction(ico,i,this);
+        act->setObjectName(i);
+        connect(act,&QAction::triggered,this,&guicore::myClicked);
+        arr.append(act);
+
+    }
+    menu->addActions(arr);
+    tray->setContextMenu(menu);
+    tray->show();
 }
 
 guicore::~guicore()
@@ -71,13 +76,20 @@ void guicore::closeEvent(QCloseEvent *event)
     if(this->isVisible()){
         event->ignore();
         this->hide();
-        QSystemTrayIcon::MessageIcon icon = QSystemTrayIcon::MessageIcon(QSystemTrayIcon::Information);
-
-        tray->showMessage("Tray Program",
-                              trUtf8("Приложение свернуто в трей. Для того чтобы, "
-                                     "развернуть окно приложения, щелкните по иконке приложения в трее"),
-                              icon,
-                              200);
+        tray->showMessage("MyMenu",
+                          "Приложение свернуто в трей. Для того чтобы, "
+                          "развернуть окно приложения, щелкните по иконке приложения в трее",
+                          QSystemTrayIcon::Information,
+                          200);
     }
+}
+
+void guicore::myClicked()
+{
+    qDebug () << sender()->objectName();
+    QDesktopServices *d = new QDesktopServices;
+    d->openUrl(QUrl("file:/Users/avm/Downloads/")); /// dir
+    d->openUrl(QUrl("file:/Users/avm/Downloads/test.txt")); /// file
+
 }
 

@@ -20,7 +20,6 @@ SOURCES += \
     gui/guisettings.cpp \
     main.cpp \
     gui/guicore.cpp \
-    sys/filesettingscombain.cpp \
     sys/itemmenu.cpp \
     sys/settings.cpp \
     sys/swcore.cpp
@@ -29,7 +28,6 @@ HEADERS += \
     gui/guicore.h \
     gui/guiitem.h \
     gui/guisettings.h \
-    sys/filesettingscombain.h \
     sys/itemmenu.h \
     sys/settings.h \
     sys/swcore.h

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QSettings>
 
-#include "filesettingscombain.h"
+
 
 class settings : public QObject
 {
@@ -16,7 +16,7 @@ public:
 private:
 
     QSettings *sysSettings;
-    fileSettingsCombain *cb;
+
 
 };
 
